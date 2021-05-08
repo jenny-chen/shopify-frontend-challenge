@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const Button = styled.button`
   ${props => {
@@ -9,6 +9,8 @@ const Button = styled.button`
         return `background-color: ${props.theme.colors.darkGreen};`
       case "red":
         return `background-color: ${props.theme.colors.red};`
+      case "paleYellow":
+        return `background-color: ${props.theme.colors.paleYellow};`
       default:
         return `background-color: ${props.theme.colors.gray};`
     }
@@ -18,11 +20,29 @@ const Button = styled.button`
   border-radius: 5px;
   color: white;
   float: right;
-  margin-top: 8px;
+  font-family: ${props => props.theme.fonts};
+  font-size: 0.8em;
   padding: 5px 10px;
+
+  ${({ theme }) => `${theme.mediaQueries.tablet} {
+    font-size: 1em;
+    margin-top: 4px;
+    padding: 8px 15px;
+  }`}
+
+  ${props => props.toggleNom && css`
+    border-radius: 50px;
+    float: none;
+    left: -50%;
+    position: relative;
+  `}
 
   &:hover {
     cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
   }
 
   &:active {

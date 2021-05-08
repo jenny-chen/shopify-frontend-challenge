@@ -8,7 +8,7 @@ const Input = styled.input`
   line-height: 2em;  
   font-family: ${props => props.theme.fonts};
   font-size: 2em;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
   transition: color 0.5s, border-color 0.5s;
   width: 100%;
 

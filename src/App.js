@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import upArrow from './imgs/up-arrow.png';
 import {
   Box,
   Button,
@@ -8,22 +9,26 @@ import {
   Image,
   Input,
   Text,
-} from './components/basics'
-import useWindowWidth from './hooks/useWindowWidth.js'
+} from './components/basics';
+import useWindowWidth from './hooks/useWindowWidth.js';
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [movie, setMovie] = useState({});
-  const [validMovie, setValidMovie] = useState(false);
+  const [movies, setMovies] = useState([]);
   const [nominations, setNominations] = useState(JSON.parse(localStorage.getItem('asyncNominations') || "[]"))
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showNominations, setShowNominations] = useState(false);
+  const [validMovie, setValidMovie] = useState(false);
+
+  const tabletWidth = 1024;
+  const { width } = useWindowWidth();
 
   useEffect(() => {
     async function fetchEvents() {
-      fetch('https://www.omdbapi.com/?apikey=4c504ffd&t='+searchTerm)
+      fetch('https://www.omdbapi.com/?apikey=4c504ffd&s='+searchTerm)
         .then(response => response.json())
         .then(data => {
           if (!data.Error) {
-            setMovie(data)
+            setMovies(data.Search.slice(0,5))
             setValidMovie(true)
           } else {
             setValidMovie(false)
@@ -48,11 +53,11 @@ function App() {
     }
   }
 
-  function toggleNomination(e) {
-    if (nominations.some(m => m.imdbID === movie.imdbID)) {
-      setNominations(nominations.filter(nomination => nomination.imdbID !== movie.imdbID))
+  function toggleNomination(e, currMovie) {
+    if (nominations.some(m => m.imdbID === currMovie.imdbID)) {
+      setNominations(nominations.filter(nomination => nomination.imdbID !== currMovie.imdbID))
     } else if (nominations.length < 5) {
-      setNominations(nominations.concat([movie]))
+      setNominations(nominations.concat([currMovie]))
     }
   }
 
@@ -60,36 +65,37 @@ function App() {
     setNominations(nominations.filter(nomination => nomination.imdbID !== e.target.id))
   }
 
-  const { width } = useWindowWidth();
+  function toggleShowNomination(e) {
+    setShowNominations(!showNominations);
+  }
 
   return (
     <Flex>
-      <Box outside width="50%">
+      {/* section for searching movies */}
+      <Box
+        outside
+        search
+        width="50%"
+      >
         <Input placeholder="Search for movie..." type="text" id="movie" name="movie" onKeyDown={ enterSearchTerm } />
-        {searchTerm && validMovie &&
-          <>
-            <Button
-              color={ nominations.some(m => m.imdbID === movie.imdbID) ? "darkGreen" : (nominations.length >= 5 ? "red" : "gold") }
-              onClick={ toggleNomination }
-            >
-              { nominations.some(m => m.imdbID === movie.imdbID) ? "Nominated" : (nominations.length >= 5 ? "At max nominations" : "Nominate") }
-            </Button>
-            <Text title>{movie.Title}</Text>
-            <Text>{movie.Year}</Text>
-            <Text>{"Genres: " + movie.Genre}</Text>
-            <Text>{"Directed by " + movie.Director}</Text>
-            {width >= 1024 &&
-              <>
-                <Text>{"Starring " + movie.Actors}</Text>
-                {movie.Poster !== "N/A" &&
-                  <Box style={{ textAlign: "center" }}>
-                    <Image src={movie.Poster} alt={"poster of " + movie.Title} />
-                  </Box>
-                }
-              </>
-            }
-          </>
-        }
+        {movies.map((currMovie, i) => {
+          if (currMovie.Response === "False") {
+            return
+          }
+          return (  
+            <Box movie>
+              <Button
+                color={ nominations.some(m => m.imdbID === currMovie.imdbID) ? "darkGreen" : (nominations.length >= 5 ? "red" : "gold") }
+                disabled={ !nominations.some(m => m.imdbID === currMovie.imdbID ) && nominations.length >= 5 }
+                onClick={ (e) => toggleNomination(e, currMovie) }
+              >
+                { nominations.some(m => m.imdbID === currMovie.imdbID) ? "NOMINATED" : (nominations.length >= 5 ? (width >= tabletWidth ? "MAX NOMINATIONS" : "AT MAX") : "NOMINATE") }
+              </Button>
+              <Text title>{currMovie.Title}</Text>
+              <Text>{currMovie.Year}</Text>
+            </Box>
+          )
+        })}
 
         {/* error messages */}
         {!searchTerm &&
@@ -100,7 +106,19 @@ function App() {
         }
       </Box>
 
-      <Box outside nominations width="29%" style={{ textAlign: "center" }}>
+      {/* section for showing nominations */}
+      <Box
+        outside
+        nominations
+        notShowing={showNominations}
+        width="29%"
+        style={{ textAlign: "center" }}
+      >
+        <Box toggleNom>
+          <Button toggleNom onClick={ toggleShowNomination} color="paleYellow">
+            <Image src={upArrow} rotated={!showNominations} width="50px" height="50px" />
+          </Button>
+        </Box>
         <Heading>NOMINATIONS</Heading>
         {nominations.concat(Array(5-nominations.length).fill({})).map((m, i) => {
           if (m.imdbID) {

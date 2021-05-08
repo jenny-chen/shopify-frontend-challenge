@@ -1,7 +1,11 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 const Image = styled.img`
-  margin-top: 20px;
+  transition: transform 1s;
+
+  ${props => props.rotated && css`
+    transform: rotate(180deg);
+  `}
 `
 
 export default Image
