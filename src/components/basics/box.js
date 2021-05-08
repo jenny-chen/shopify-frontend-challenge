@@ -17,12 +17,13 @@ const Box = styled.div`
   ${props => props.instructions && css`
     position: absolute;
     width: 100vw;
-    height: 100vh;
     text-align: center;
     background-color: white;
     z-index: 1;
-    bottom: ${props.hideInstr ? "-100%" : "0"};
-    transition: bottom 2s;
+    overflow: hidden;
+    bottom: 0;
+    height: ${props.hideInstr ? "0" : "100vh"};
+    transition: bottom 1s, height 1s;
 
     ${Box} {
       margin: auto;
