@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { Heading } from './index'
 
 const Box = styled.div` 
   ${props => props.outside && css`
@@ -13,10 +14,30 @@ const Box = styled.div`
     }`}
   `}
 
-  ${props => props.search && css`
-    
-    ${({ theme }) => `${theme.mediaQueries.tablet} {
-    }`}
+  ${props => props.instructions && css`
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+    background-color: white;
+    z-index: 1;
+    bottom: ${props.hideInstr ? "-100%" : "0"};
+    transition: bottom 2s;
+
+    ${Box} {
+      margin: auto;
+      margin-top: 50%;
+      width: 60%;
+
+      ${({ theme }) => `${theme.mediaQueries.tablet} {
+        margin-top: 20%;
+      }`}
+    }
+
+    ${Heading} {
+      letter-spacing: 0;
+      font-weight: bold;
+    }
   `}
 
   ${props => props.movie && css`
@@ -26,7 +47,7 @@ const Box = styled.div`
 
   ${props => props.nominations && css`
     background-color: ${props => props.theme.colors.paleYellow};
-    bottom: 0;
+    bottom: ${props.notShowing ? "-520px" : "0"};
     height: 475px;
     transition: bottom 1s;
    
@@ -36,10 +57,6 @@ const Box = styled.div`
       bottom: auto;
       height: auto;
     }`}
-  `}
-
-  ${props => props.notShowing && css`
-    bottom: -520px;
   `}
 
   ${props => props.toggleNom && css`

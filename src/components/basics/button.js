@@ -19,7 +19,6 @@ const Button = styled.button`
   border: none;
   border-radius: 5px;
   color: white;
-  float: right;
   font-family: ${props => props.theme.fonts};
   font-size: 0.8em;
   padding: 5px 10px;
@@ -30,9 +29,12 @@ const Button = styled.button`
     padding: 8px 15px;
   }`}
 
+  ${props => props.nominate && css`
+    float: right;
+  `}
+
   ${props => props.toggleNom && css`
     border-radius: 50px;
-    float: none;
     left: -50%;
     position: relative;
   `}
