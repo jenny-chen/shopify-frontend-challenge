@@ -20,9 +20,6 @@ const theme = {
     red: "#C5463E",
   },
   fonts: "Futura, Helvetica, Calibri",
-  // fonts: {
-  //   sans: "Futura, Helvetica, Calibri",
-  // },
   mediaQueries: {
     mobile: `@media screen and (min-width: ${breakpoints[0]})`,
     tablet: `@media screen and (min-width: ${breakpoints[1]})`,

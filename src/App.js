@@ -7,10 +7,9 @@ import {
   Heading,
   Image,
   Input,
-  SubHeading,
   Text,
 } from './components/basics'
-import useWindowDimensions from './hooks/useWindowDimensions.js'
+import useWindowWidth from './hooks/useWindowWidth.js'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -61,7 +60,7 @@ function App() {
     setNominations(nominations.filter(nomination => nomination.imdbID !== e.target.id))
   }
 
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowWidth();
 
   return (
     <Flex>

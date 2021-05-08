@@ -14,15 +14,19 @@ const Button = styled.button`
     }
   }};
 
-  color: white;
-  border-radius: 5px;
   border: none;
-  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
   float: right;
   margin-top: 8px;
+  padding: 5px 10px;
 
   &:hover {
     cursor: pointer;
+  }
+
+  &:active {
+    filter: brightness(0.9);
   }
 `
 

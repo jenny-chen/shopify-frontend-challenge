@@ -3,10 +3,7 @@ import styled, { css } from 'styled-components'
 const Box = styled.div` 
   ${props => props.outside && css`
     padding: 10%;
-  `}
 
-
-  ${props => props.outside && css`
     ${({ theme }) => `${theme.mediaQueries.tablet} {
       padding: 10vh 5% 0 5%;
       width: ${props.width ? props.width : "100%"};

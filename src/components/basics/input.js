@@ -1,20 +1,20 @@
 import styled from 'styled-components'
 
 const Input = styled.input`
-  line-height: 2em;  
-  width: 100%;
-  border: none;
   background-color: inherit;
+  border: none;
+  border-bottom: 5px solid ${props => props.theme.colors.lightGray};
   color: ${props => props.theme.colors.lightGray};
+  line-height: 2em;  
   font-family: ${props => props.theme.fonts};
   font-size: 2em;
-  border-bottom: 5px solid ${props => props.theme.colors.lightGray};
   margin-bottom: 40px;
   transition: color 0.5s, border-color 0.5s;
+  width: 100%;
 
-  &::placeholder {
-    color: ${props => props.theme.colors.lightGray}
-  }
+  ${({ theme }) => `${theme.mediaQueries.tablet} {
+    font-size: 3em;
+  }`}
 
   &:focus {
     border-color: ${props => props.theme.colors.gray};
@@ -22,9 +22,9 @@ const Input = styled.input`
     outline-width: 0;
   }
 
-  ${({ theme }) => `${theme.mediaQueries.tablet} {
-    font-size: 3em;
-  }`}
+  &::placeholder {
+    color: ${props => props.theme.colors.lightGray}
+  }
 `
 
 export default Input
