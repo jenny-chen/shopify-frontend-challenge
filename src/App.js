@@ -16,7 +16,7 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [nominations, setNominations] = useState(JSON.parse(localStorage.getItem('asyncNominations') || "[]"))
   const [searchTerm, setSearchTerm] = useState("");
-  const [showNominations, setShowNominations] = useState(false);
+  const [hideNominations, setHideNominations] = useState(true);
   const [validMovie, setValidMovie] = useState(false);
 
   const tabletWidth = 1024;
@@ -65,8 +65,8 @@ function App() {
     setNominations(nominations.filter(nomination => nomination.imdbID !== e.target.id))
   }
 
-  function toggleShowNomination(e) {
-    setShowNominations(!showNominations);
+  function toggleHideNominations(e) {
+    setHideNominations(!hideNominations);
   }
 
   return (
@@ -110,13 +110,13 @@ function App() {
       <Box
         outside
         nominations
-        notShowing={showNominations}
+        notShowing={hideNominations}
         width="29%"
         style={{ textAlign: "center" }}
       >
         <Box toggleNom>
-          <Button toggleNom onClick={ toggleShowNomination} color="paleYellow">
-            <Image src={upArrow} rotated={!showNominations} width="50px" height="50px" />
+          <Button toggleNom onClick={ toggleHideNominations } color="paleYellow">
+            <Image src={upArrow} rotated={!hideNominations} width="50px" height="50px" />
           </Button>
         </Box>
         <Heading>NOMINATIONS</Heading>
