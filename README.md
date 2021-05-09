@@ -19,6 +19,7 @@ Overall, I just wanted a clean, simple, and intuitive experience. Picking movie 
 ## Development
 
 Developed using React, JavaScript
+
 Libraries used: [styled-components](https://styled-components.com/)
 
 All components were developed from scratch and the site has fully responsive design across all platforms.
@@ -35,10 +36,10 @@ All components were developed from scratch and the site has fully responsive des
 ## Improvements for the Future
 Needless to say, there are a variety of improvements that could be made for the future. Here are just a few of my ideas. 
 
-- Panel for displaying extra information
+- **Panel for displaying extra information**
   - Title and release year are the bare minimum for information, it would be nice to allow the user to view more info
   - This could be done sending another request to the API in order to get the more detailed explanation on that specific movie
-- Login
+- **Login**
   - Pretty self-explanatory, provide a method for the user to log in so we can track multiple users
-- Suggest similar movies
+- **Suggest similar movies**
   - More of a stretch idea, but based on the user's current nominations we could then go to suggest similar movies that they might like (based on genres, directors etc.)
